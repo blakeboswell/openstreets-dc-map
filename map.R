@@ -156,7 +156,7 @@ p <- make_map(
 
 # save svg and pdf versions
 
-ggsave(file = './output/map.svg', plot = p, width = 8.5 / 2, height = 11 / 2, bg = "white")
+ggsave(file = './output/map.svg', plot = p, width = 8.5, height = 11, bg = "white")
 
 ggsave(
   plot = p,
