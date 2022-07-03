@@ -11,7 +11,9 @@ showtext_auto()
 options(tigris_use_cache = TRUE)
 
 
-# get 
+# get major and minor streets as separate tables
+# for ease of assigning different series aesthetics
+
 streets <- getbb("Washington DC") %>%
   opq() %>%
   add_osm_feature(
@@ -39,10 +41,14 @@ small_streets <- getbb("Washington DC") %>%
   osmdata_sf()
 
 
+# get the set difference of DC proper to add alpha transparency
+
 dc_tract    <- tigris::tracts(state = "DC")
 dc_boundary <- st_union(dc_tract)
 dc_inv      <- st_difference(st_as_sfc(st_bbox(dc_boundary)), dc_boundary)
 
+
+# cool places in DC to add as points
 
 tables <- tribble(
   ~description,~x,~y,
@@ -67,9 +73,10 @@ tables <- st_as_sf(tables, coords = c("x", "y"), crs = st_crs(4326)) %>%
   st_transform(crs = st_crs(dc_inv))
 
 
+# make map
+
 make_map <- function(background_color, large_color, small_color, font_color,
-                     include_labels = FALSE,
-                     include_points = FALSE) {
+                     include_labels = FALSE) {
   
   p <- ggplot() +
     geom_sf(
@@ -147,8 +154,9 @@ p <- make_map(
   font_color         = '#006d77'
 )
 
+# save svg and pdf versions
 
-ggsave(file = './output/map.svg', plot = p, width = 8.5, height = 11, bg = "white")
+ggsave(file = './output/map.svg', plot = p, width = 8.5 / 2, height = 11 / 2, bg = "white")
 
 ggsave(
   plot = p,
