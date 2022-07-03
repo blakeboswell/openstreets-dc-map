@@ -4,4 +4,4 @@ Stylized map of Washington DC using [OpenStreetMap](https://www.openstreetmap.or
 
 ## Result
 
-<img src="output/map.svg" alt="map"></img>
+<img src="output/map-large.svg" alt="map"></img>
