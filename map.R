@@ -69,11 +69,15 @@ tables <- tribble(
   "Ivy City"                , -76.984294, 38.913934,
 )
 
+tables <- tables %>% 
+  mutate(
+    n = str_pad(as.character(row_number()), width = 2, pad = "0")
+  )
+
+tables %>% write_csv('output/locations.csv')
+
 tables <- st_as_sf(tables, coords = c("x", "y"), crs = st_crs(4326)) %>%
   st_transform(crs = st_crs(dc_inv))
-
-tables <- tables %>% mutate(n = str_pad(as.character(row_number()), width = 2, pad = "0"))
-
 
 # make map
 
