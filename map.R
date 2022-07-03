@@ -83,15 +83,15 @@ make_map <- function(background_color, large_color, small_color, font_color,
       data = streets$osm_lines,
       inherit.aes = FALSE,
       color = large_color,
-      size  = .4,
-      alpha = .8
+      size  = 0.4,
+      alpha = 0.8
     ) +
     geom_sf(
       data = small_streets$osm_lines,
       inherit.aes = FALSE,
       color = small_color,
-      size  = .2,
-      alpha = .6
+      size  = 0.2,
+      alpha = 0.6
     ) +
     geom_sf(
       data = dc_inv,
