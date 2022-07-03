@@ -72,6 +72,8 @@ tables <- tribble(
 tables <- st_as_sf(tables, coords = c("x", "y"), crs = st_crs(4326)) %>%
   st_transform(crs = st_crs(dc_inv))
 
+tables <- tables %>% mutate(n = str_pad(as.character(row_number()), width = 2, pad = "0"))
+
 
 # make map
 
@@ -135,8 +137,8 @@ make_map <- function(background_color, large_color, small_color, font_color,
     p <- p +
       geom_sf_label(
         data = tables,
-        aes(label = description),
-        nudge_y = 0.0015,
+        aes(label = n),
+        nudge_y = 0.002,
         check_overlap = TRUE,
         family = "Petit Formal Script",
       )
@@ -151,7 +153,8 @@ p <- make_map(
   background_color   = '#EDF6F9',
   large_color        = '#006d77',
   small_color        = '#83c5be',
-  font_color         = '#006d77'
+  font_color         = '#006d77',
+  include_labels = TRUE
 )
 
 # save svg and pdf versions
